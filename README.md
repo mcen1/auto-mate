@@ -7,4 +7,4 @@ https://auto-mate.company.com/
 
 Automation tiles governed by the src/json directory.
 
-![image](https://github.com/mcen1/auto-mate/assets/49885111/c848d016-d45b-4008-8430-244e70b8e02c)
+![image](https://github.com/mcen1/auto-mate/assets/49885111/ec64a327-0e97-4687-832f-bb1bc49b16c6)
