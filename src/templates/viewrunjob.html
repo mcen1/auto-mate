@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Auto-mate</title>
+    </head>
+    <body>
+{% include "header.html" %}
+<br>
+<br>
+<div class="viewjobbar">
+<div id="scrollfollower" class="cat action">
+    <label><input type="checkbox" id="stayOnBottom"/> <span style='width:100%'>Auto-scroll</span></label>
+</div>
+    <div id="jobcancel" class="cat2 action jobcancel" style="display:inline-block">
+    <form id="jobcanceller" action="{{URLPREFACE or ""}}/canceljobawx" method="post">
+      <input type="hidden" id="jobid" name="jobid" value="{{jobid}}">
+      <input type="submit" class="cancelbutton vertical-center" value="Cancel job {{jobid}}">
+    </form>
+    </div>
+</div>
+<br>
+<div class="mainbody">
+<center>
+
+  <div class="joboutput" id="liveData">
+
+    <div id="jobstatus"></div>
+    <div id="warningdiv"></div>
+    <br>
+    <div id="spinthing"></div>
+    <div id="load_jobdata">One moment please...</div>
+      <script type="text/javascript" src="{{URLPREFACE or ""}}{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+      <script type="text/javascript">
+      $("document").ready(function updateStatus(){
+        var xhr2 = new XMLHttpRequest();
+        xhr2.withCredentials = true;
+        xhr2.open("GET", "{{ URLPREFACE }}/awxjobresultstatus?jobid={{ jobid }}");
+        xhr2.send();
+        xhr2.addEventListener("readystatechange", function() {
+        var data2= xhr2.responseText;
+        if(this.readyState === 4) {
+          $('#jobstatus').html("Job status: <p class='nopbreak awxstatus"+data2+"'>"+data2+"</p>");
+         if (data2!="finished"&&data2!="failed"&&data2!="canceled"&&data2!="error") {
+           $('#spinthing').html("<div class='leftloader'></div>")
+           document.getElementById('jobcancel').style.visibility='visible';
+           setTimeout(updateStatus, 5000);
+           setTimers();
+         }
+         // "successful","failed","cancelled","canceled","error"
+         if (data2=="finished"||data2=="failed"||data2=="canceled"||data2=="error") {
+           $('#spinthing').hide();
+           document.getElementById('jobcancel').style.visibility='hidden';
+           $('#scrollfollower').hide();
+           if (~data2.indexOf("canceled")) {
+             $('#warningdiv').html("Note: Logs for cancelled jobs may be truncated.");
+           }
+           if (~data2.indexOf("error")) {
+             $('#warningdiv').html("Note: Logs for errored jobs may be truncated.");
+           }
+
+           setTimeout(updateStatus, 9999999999);
+         }
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open("GET", "{{ URLPREFACE }}/awxjobabridged?jobid={{ jobid }}");
+        xhr.send();
+        xhr.addEventListener("readystatechange", function() {
+        var data= xhr.responseText;
+        $('#load_jobdata').html(data);
+         if (document.getElementById('stayOnBottom').checked) {
+           window.scrollTo(0, document.body.scrollHeight);
+         }
+
+       })
+      }})});
+      </script>
+  </div>
+  <br>
+  </center>
+  </div>
+</body>
+</html>

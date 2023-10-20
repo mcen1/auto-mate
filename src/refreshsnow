@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /usr/portal/
+python3 grab_snow_apps.py /usr/portal/supporting_tools/textfiles/snowapps.txt.new && mv /usr/portal/supporting_tools/textfiles/snowapps.txt.new /usr/portal/supporting_tools/textfiles/snowapps.txt

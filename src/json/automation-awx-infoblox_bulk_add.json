@@ -1,0 +1,21 @@
+{
+  "awx-job-name": "automation-awx-infoblox_bulk_add-job",
+  "portal-endpoint": "infoblox_add_dns_bulk",
+  "icon": "dns.png",
+  "short-description": "Add multiple records at once into Infoblox.",
+  "valid-ad-groups": ["CN=prd_role_adm_tr1_dnsadmin,OU=Roles,DC=company,DC=com","CN=prd_app_tr1_access_ansible_itccaa,DC=company,DC=com","CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "run-via": ["form"],
+  "category": "ITOA",
+  "friendly-name": "Add multiple Infoblox DNS records in bulk",
+  "visibility": "hidden",
+  "form-elements":[
+    {"friendly-name":"DNS records (max 50):","type":"textarea","placeholder":"dnsRecordName,dnsRecordValue,dnsRecordType,dnsView\ndnsRecordName,dnsRecordValue,dnsRecordType,dnsView\n[...]","rows":10,"columns":"100", "var-name":"dnsBulk", "required": true },
+    {"type":"inline-html","content":"<div class='likeatableleft'></div><div class='likeatableright'><div class='helperdiv' style=''>Formatting should resemble the following:<br><i>&emsp;dnsRecordName,dnsRecordValue,dnsRecordType,dnsView</i><br><br><b>dnsRecordName</b>: the fully qualified domain name of your entry if it's an A-record, CNAME, or TXT. It'll be an IP address for PTR records.<br><b>dnsRecordValue</b>: an IP address for an A-record, a C-NAME's value, a PTR record's DNS name, or a TXT record's content.<br><b>dnsRecordType</b>: should be a, ptr, aptr (A-record with a PTR), cname, or txt.<br><b>dnsRecordView</b>: can be Internal, External, or Both.<br><br>Examples:<br><i>&emsp;mycooldns1.npd.cencora.com,10.3.2.1,a,internal<br>&emsp;mycooldns2.npd.cencora.com,10.3.2.2,aptr,internal<br>&emsp;mycooldns3.npd.cencora.com,somethingelse.npd.cencora.com,cname,external<br>&emsp;mycooldns4.npd.cencora.com,textvalue,txt,both</i></div></div>"},
+    {"friendly-name":"DNS record's associated ServiceNow application:","type":"snowapp", "var-name":"dnsRecordApplication"  },
+    {"friendly-name":"SCTSK associated with this DNS request:","type":"text","max-length":12, "var-name":"dnsRecordSCTASK", "placeholder": "SCTSK#######", "pattern":"[Ss][Cc][Tt][Ss][Kk][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" }
+  ],
+  "javascript-files-head": ["bulkinfobloxvalidation.js"],
+  "validate-form-function": "validateForm()",
+  "description": "This job will add multiple records to Infoblox DNS and also creates a pre-approved change before doing so." 
+}

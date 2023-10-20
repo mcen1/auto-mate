@@ -1,0 +1,15 @@
+{
+  "awx-job-name": "automation-awx-lookup_user_ldap_groups-job",
+  "portal-endpoint": "lookup_user_ldap_groups",
+  "short-description": "Retrieve list of groups by username.",
+  "icon": "ldap.png",
+  "valid-ad-groups": ["CN=prd_app_tr1_access_ansible_sosaa,DC=company,DC=com","CN=prd_app_tr1_access_ansible_itccaa,DC=company,DC=com","CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "run-via": ["form","url"],
+  "category": "ITOA",
+  "friendly-name": "LDAP Group Lookup",
+  "form-elements":[
+    {"friendly-name":"Please supply the username (or multiple usernames separated by a space) you wish to view the memberOf attributes:","type":"text","max-length":3200, "var-name":"usernamesearch", "required": true }
+  ],
+  "description": "Look up a user's memberOf attribute to retrieve a list of their group memberships."
+}

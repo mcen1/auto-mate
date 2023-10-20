@@ -1,0 +1,64 @@
+<script>
+  var LOGOUTTIME=61000;
+//  var LOGOUTTIME=6100;
+  var CONFIRMTIME=840000;
+//  var CONFIRMTIME=8400;
+  var mylogout="";
+  var myconfirmbox="";
+  function setTimers() {
+    clearTimeout(myconfirmbox);
+    clearTimeout(mylogout);
+    myconfirmbox=setTimeout(showConfirmBox, CONFIRMTIME);
+  }
+  function showConfirmBox() {
+    document.getElementById("sessionoverlay").hidden = false;
+    mylogout=setTimeout(logUserOut, LOGOUTTIME);
+  }
+  function closeConfirmBox() {
+    clearTimeout(mylogout);
+    document.getElementById("sessionoverlay").hidden = true;
+  }
+  function logUserOut() {
+      const url = '{{URLPREFACE or ""}}/checksession'
+
+    fetch(url)
+      .then( res => { return res.json(); } )
+      .then( data => { 
+        if (data.results=="valid") {
+          console.log("session is still valid. resetting timers...");
+          document.getElementById("sessionoverlay").hidden = true;
+          setTimers();
+        }
+        if (data.results=="invalid") {
+          window.location.href = "{{URLPREFACE or ""}}/logout";
+        }
+      } )
+    .catch( err => { console.errror(error) } )
+
+  }
+
+  function isConfirm(answer) {
+    if (answer) {
+      myconfirmbox=setTimeout(showConfirmBox, CONFIRMTIME);
+      clearTimeout(mylogout);
+      window.open("{{URLPREFACE or ""}}/refreshsession");
+    } else {
+
+      document.getElementById("sessionoverlay").hidden = true;
+      location.href = '{{URLPREFACE or ""}}/logout';
+    }
+    closeConfirmBox();
+  }
+</script>
+
+<body onunload="setTimers()" onload="setTimers()">
+  <div class="sessionoverlay center-screen" id="sessionoverlay" hidden>
+    <div class="confirm-box">
+      <div onclick="closeConfirmBox()" class="close">&#10006;</div>
+      <h2>Warning</h2>
+      <p>Your session is about to expire. Do you want to renew it?</p>
+      <button onclick="isConfirm(true)">Renew</button>
+      <button onclick="isConfirm(false)">Logout</button>
+    </div>
+  </div>
+</body>

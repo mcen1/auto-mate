@@ -1,0 +1,32 @@
+{
+  "awx-job-name": "automation-awx-jobtesting-job",
+  "portal-endpoint": "all-inputs-example",
+  "valid-ad-groups": ["CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "visibility": "hidden",
+  "run-via": ["form","url"],
+  "form-elements":[
+    {"friendly-name":"Example of text:","type":"text","max-length":128, "var-name":"favoriteanimal", "required": true},
+    {"friendly-name":"Example of password:","type":"password","max-length":128, "var-name":"password", "required": false},
+    {"friendly-name":"Example of text without paste:","type":"text","max-length":128, "var-name":"nopaste", "required": true, "onpaste": "return false;"},
+    {"friendly-name":"Example of color:","type":"color", "var-name": "favoritecolor"},
+    {"friendly-name":"Example of range:","type":"range", "min":"0", "max":"100", "value":"90", "step":"10", "var-name": "rangeexample"},
+    {"friendly-name":"Example of week:","type":"week", "var-name": "weekexample"},
+    {"friendly-name":"Example of month:","type":"month", "var-name": "monthexample"},
+    {"friendly-name":"Example of date:","type":"date", "var-name": "dateexample"},
+    {"friendly-name":"Example of datetime-local:","type":"datetime-local", "var-name": "dtlexample"},
+    {"friendly-name":"Example of an email:","type":"email", "var-name": "emailexample"},
+    {"friendly-name":"Example of URL:","type":"url", "var-name": "urlexample"},
+    {"friendly-name":"Example of number:","type":"number", "var-name": "numberexample"},
+    {"friendly-name":"Example of tel, which works the same as text:","type":"tel", "var-name": "telexample", "pattern":"[0-9]{3}-[0-9]{3}-[0-9]{4}"},
+    {"friendly-name":"Example of file:","type":"file", "var-name": "fileexample"},
+    {"friendly-name":"Example of file (.txt suggested):","type":"file", "accept": ".txt", "var-name": "fileexample2"},
+    {"friendly-name":"Example of select:","type":"select","options": ["vanilla","chocolate","strawberry","other"], "var-name": "exampleselect"},
+    {"type":"hr"},
+    {"type":"inline-html","content":"<h1>hello!</h1>"},
+    {"friendly-name":"Example of text area:","type":"textarea", "var-name": "exampletextarea"}
+  ],
+  "javascript-files-head": [],
+  "javascript-files-tail": ["dynamicexample.js"],
+  "description": "This is a demo of the AWX simple portal."
+}

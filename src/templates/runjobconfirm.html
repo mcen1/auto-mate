@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br><br>
+<div class="mainbody">
+<br><br>
+<center>
+  <div class="awxrunreq">
+<form id="userform" action="{{URLPREFACE or ""}}/runjobawx" method="post" >
+   {% for item in reqargs %}
+   <div class="likeatablerow">
+     <div class="likeatableleft">
+
+     {{item|replace("extravar","")}}:</div><div class="likeatableright"><input type="text"  id="country" name="{{item}}" value="{{reqargs[item]}}" readonly style="background: #E0E0E0"></div>
+   {% endfor %}
+</div>
+<br>
+Are you sure you want to submit this information?<br>
+<input type="submit" value="Yes, submit this form!"></form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='{{URLPREFACE or ""}}/'>No, get me out of here.</a>
+
+  </div>
+  <br>
+  </center>
+  </div>
+  </body>
+</html>

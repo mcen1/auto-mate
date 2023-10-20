@@ -1,0 +1,8 @@
+{
+  "name": "sosa-tools",
+  "friendlyname": "SOSA tools",
+  "url": "https://sosapi.amerisourcebergen.com/",
+  "target": "_blank",
+  "valid-ad-groups": ["everyone"]
+}
+

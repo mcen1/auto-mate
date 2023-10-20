@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/'+request.host_url.replace('http://','').replace('https://','').replace('/','')+'.css') }}">
+<meta http-equiv="refresh" content="930">
+<div id="header" class="navbar">
+  <div class="portallogo"><img src='{{URLPREFACE or ""}}{{ url_for('static', filename='images/automatelogo.png') }}'> &#x2022; <a class="navbarlink" href="{{URLPREFACE or ""}}/">Home</a> &#x2022; <a class="navbarlink" href="{{URLPREFACE or ""}}/logout">Logout</a>
+  </div>
+</div>
+{% if 'auto-mate-np' in request.host_url or 'localhost' in request.host_url %}
+<br><br>
+<center>
+<h3>
+This is the non-production version of auto-mate used for user acceptance testing only. Please visit <a href='https://auto-mate.company.com'>auto-mate.company.com</a> for production jobs.
+</h3>
+</center>
+{% endif %}
+
+<br>
+{% include "tag.html" %}
+

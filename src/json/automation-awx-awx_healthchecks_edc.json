@@ -1,0 +1,14 @@
+{
+  "awx-job-name": "automation-awx-awx_health_checks_edc-job",
+  "portal-endpoint": "automation_awx_health_checks_edc",
+  "short-description": "Validate connectivity on node.",
+  "valid-ad-groups": ["CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "run-via": ["form"],
+  "category": "AWX",
+  "icon": "europe.png",
+  "friendly-name": "AWX Connectivity Checks",
+  "form-elements":[
+  ],
+  "description": "Hit the submit button to run connectivity checks on the EDC node."
+}

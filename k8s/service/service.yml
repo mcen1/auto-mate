@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auto-mate-service
+spec:
+  ports:
+  - name: default
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: auto-mate
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

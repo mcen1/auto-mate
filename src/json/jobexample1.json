@@ -1,0 +1,17 @@
+{
+  "awx-job-name": "automation-awx-jobtesting-job",
+  "portal-endpoint": "automation-awx-jobtesting-job",
+  "valid-ad-groups": ["CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "visibility": "hidden",
+  "run-via": ["form","url"],
+  "form-elements":[
+    {"friendly-name":"What is your favorite animal?","type":"text","max-length":128, "var-name":"favoriteanimal", "required": true },
+    {"friendly-name":"Enter a three letter country code","type":"text", "var-name":"countrycode", "required": true, "pattern": "[A-Za-z]{3}"},
+    {"friendly-name":"What is your favorite website?","type":"text", "var-name":"favoritewebsite", "form-type": "url"},
+    {"friendly-name":"What is your favorite color?","type":"select","options": ["red","green","blue","other"], "var-name": "favoritecolor"},
+    {"friendly-name":"Please enter job tags","type":"awx-job-tags"},
+    {"friendly-name":"Please enter job tags to skip","type":"awx-job-skip-tags"}
+  ],
+  "description": "This is a demo of the AWX simple portal."
+}

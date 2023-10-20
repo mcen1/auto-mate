@@ -1,0 +1,25 @@
+{
+  "awx-job-name": "automation-awx-jobtesting-job",
+  "portal-endpoint": "dynamic-job",
+  "valid-ad-groups": ["CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "run-via": ["form","url"],
+  "visibility": "hidden",
+  "category": "Miscellaneous Testing",
+  "form-elements":[
+    {"friendly-name":"What is your favorite animal?","type":"text","max-length":128, "var-name":"favoriteanimal", "required": true},
+    {"friendly-name":"Enter a three letter country code","type":"text", "var-name":"countrycode", "required": true, "pattern": "[A-Za-z]{3}", "placeholder": "USA, GBR, etc"},
+    {"friendly-name":"What is your favorite website?","type":"text", "onchange": "judgeUser()", "title":"Websites are places you can visit on the information super highway!", "var-name":"favoritewebsite", "form-type": "url"},
+    {"friendly-name":"","type":"div-begin", "var-name":"likewebsites", "style": "display:none"},
+    {"friendly-name":"Why do you like that website?","type":"text", "var-name":"whydoyoulikeit", "style":""},
+    {"friendly-name":"","type":"div-end"},
+    {"friendly-name":"","type":"div-begin", "var-name":"dontlikewebsites", "style":"display:none"},
+    {"friendly-name":"Why don't you like any websites?","type":"text", "var-name":"whydoyoulikeit", "style":""},
+    {"friendly-name":"","type":"div-end"},
+    {"friendly-name":"What is your favorite color?","type":"color", "var-name": "favoritecolor"},
+    {"friendly-name":"What flavor is your favorite?","type":"select","options": [{"title":"vanilla","value":"vanilla"},{"title":"chocolate","value":"chocolate"},{"title":"strawberry","value":"strawberry"},{"title":"other","value":"other"}], "var-name": "favoriteicecream"}
+  ],
+  "javascript-files-head": [],
+  "javascript-files-tail": ["dynamicexample.js"],
+  "description": "This is a demo of the AWX simple portal."
+}

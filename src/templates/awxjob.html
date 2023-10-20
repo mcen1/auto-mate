@@ -1,0 +1,333 @@
+<html
+    {% if jobdata['background-image'] is defined %}
+    style=" background: url('{{URLPREFACE or ""}}/static/images/{{jobdata['background-image']}}') no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      color: {{jobdata['font-color']|default('#000')}}";
+    {% endif %}
+
+>
+  <head>
+        <title>Auto-mate - {{jobdata['friendly-name']|default(jobdata['portal-endpoint'])}}</title>
+        {% if jobdata['javascript-files-head'] is defined and jobdata['javascript-files-head']|length > 0 %} 
+          {% for item in jobdata['javascript-files-head'] %}
+            <script src="{{URLPREFACE or ""}}/static/js/{{item}}"></script>
+          {% endfor %}
+        {% endif %}
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br><br>
+<div class="mainbody">
+<center>
+<div class="likeatable">
+
+<form id="userform" action="{{URLPREFACE or ""}}/runjobawx" method="post" onsubmit="return {{jobdata['validate-form-function']|default('true')}}">
+  <input type="hidden" id="awx-job-name" name="awx-job-name" value="{{jobdata['awx-job-name']}}">
+  <h1>{{jobdata['friendly-name']|default(jobdata['portal-endpoint'])}}</h1><br>
+  <div class="explanation">{{ jobdata['description']|safe }}</div>
+   {% for item in jobdata['form-elements'] %}
+     {% if item['type']=='div-begin' %}
+     <div id="{{ item['var-name'] }}" 
+      {% if item['style'] is defined %}
+        style="{{ item['style'] }}"
+      {% endif %}
+      {% if item['class'] is defined %}
+        class="{{ item['class'] }}"
+      {% endif %}
+
+      >
+     {% endif %}
+     {% if item['type']=='div-end' %}
+     </div>
+     {% endif %}
+     {% if item['type']=='hr' %}
+     <hr>
+     {% endif %}
+     {% if item['type']=='inline-html' %}
+       {{ item['content'] |safe }}
+     {% endif %}
+     {% set commontypes = ['text','password', 'hidden','url','time','range','color','date','email','file','datetime-local','number','tel','week','month'] %}
+     {% if item['type'] in commontypes  %}
+   <div class="likeatablerow">
+     <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+       {{ item['friendly-name']|safe }}
+
+   </div>
+   <div class="likeatableright">
+     <input type="{{ item['type'] }}" 
+      {% if item['onchange'] is defined %}
+        onchange="{{ item['onchange'] }}" 
+      {% endif %}
+      id="extravar{{ item['var-name'] }}" 
+      name="extravar{{ item['var-name'] }}"
+      {% if item['style'] is defined %}
+        style="{{ item['style'] }}" 
+      {% endif %}
+      {% if item['max-length'] is defined %}
+        maxlength="{{ item['max-length'] }}" 
+      {% endif %}
+      {% if item['size'] is defined %}
+        size="{{ item['size'] }}"
+      {% endif %}
+      {% if item['required'] is defined %}
+        required="{{item['required']}}" 
+      {% endif %}
+      {% if item['onpaste'] is defined %}
+        onpaste="{{ item['onpaste'] }}"
+      {% endif %}
+      {% if item['autocomplete'] is defined %}
+        autocomplete="{{ item['autocomplete'] }}"
+      {% endif %}
+      {% if item['autofill'] is defined %}
+        autofill="{{ item['autofill'] }}"
+      {% endif %}
+      {% if item['placeholder'] is defined %}
+        placeholder="{{ item['placeholder'] }}"
+      {% endif %}
+      {% if item['title'] is defined %}
+        title="{{ item['title'] }}"
+      {% endif %}
+      {% if item['pattern'] is defined %} 
+        pattern="{{ item['pattern'] }}"
+      {% endif %} 
+      {% if item['value'] is defined %}
+        {% if item['value']=='ABSPECIALVARIABLEusername_notr1' %}
+        value="{{ username|replace('_tr1','') }}"
+        {% elif item['value']=='ABSPECIALVARIABLEusername' %}
+        value="{{ username }}"
+        {% else %}
+        value="{{ item['value'] }}"
+        {% endif %}
+      {% endif %}
+      {% if item['min'] is defined %}
+        min="{{ item['min'] }}"
+      {% endif %}
+      {% if item['max'] is defined %}
+        max="{{ item['max'] }}"
+      {% endif %}
+      {% if item['step'] is defined %}
+        step="{{ item['step'] }}"
+      {% endif %}
+      {% if item['accept'] is defined %}
+        accept="{{ item['accept'] }}"
+      {% endif %}
+      >
+     </div>
+    </div>
+     {% endif %}
+     {% if item['type']=='textarea' %}
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+       {{ item['friendly-name'] }}
+       </div>
+     <div class="likeatableright">
+       <textarea 
+        {% if item['pattern'] is defined %} 
+          pattern="{{ item['pattern'] }}"
+        {% endif %} 
+        {% if item['onchange'] is defined %}
+          onchange="{{ item['onchange'] }}"
+        {% endif %}
+        id="extravar{{ item['var-name'] }}" 
+        name="extravar{{ item['var-name'] }}" 
+        rows="{{ item['rows'] | default(5) }}" 
+        {% if item['style'] is defined %}
+          style="{{ item['style'] }}"
+        {% endif %}
+        {% if item['placeholder'] is defined %}
+          placeholder="{{ item['placeholder'] }}"
+        {% endif %}
+        {% if item['pattern'] is defined %}
+          pattern="{{ item['pattern'] }}"
+        {% endif %}
+        {% if item['title'] is defined %}
+          placeholder="{{ item['title'] }}"
+        {% endif %}
+        {% if item['size'] is defined %}
+          size="{{ item['size'] }}"
+        {% endif %}
+        {% if item['required'] is defined %}
+          required="{{item['required']}}" }}"
+        {% endif %}
+        cols="{{ item['columns'] | default(50)}}"
+       >{{ item['default'] | default("") }}</textarea>
+      </div>
+     </div>
+     {% endif %}
+     {% if item['type']=='awx-instancegroup' %}
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+         {{ item['friendly-name'] }}
+       </div>
+       <div class="likeatableright">
+         <select style="{{ item['style'] }}"
+          {% if item['title'] is defined %}
+            placeholder="{{ item['title'] }}"
+          {% endif %}
+          {% if item['onchange'] is defined %}
+             onchange="{{ item['onchange'] }}"
+          {% endif %}
+          {% if item['placeholder'] is defined %}
+            placeholder="{{ item['placeholder'] }}"
+          {% endif %}
+          {% if item['multiple'] is defined %}
+            multiple
+          {% endif %}
+           id="awxinstancegroup"
+           name="awxinstancegroup"
+          >
+     {% for subitem in item['options'] %}
+       <option value='{{subitem["value"]}}'>{{subitem["title"]|default(subitem["value"])}}</option>
+     {% endfor %}
+   </select></div></div>
+
+     {% endif%}
+
+     {% if item['type']=='awx-credential' %}
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+         {{ item['friendly-name'] }}
+       </div>
+       <div class="likeatableright">
+         <select style="{{ item['style'] }}"
+          {% if item['title'] is defined %}
+            placeholder="{{ item['title'] }}"
+          {% endif %}
+          {% if item['onchange'] is defined %}
+             onchange="{{ item['onchange'] }}"
+          {% endif %}
+          {% if item['placeholder'] is defined %}
+            placeholder="{{ item['placeholder'] }}"
+          {% endif %}
+          {% if item['multiple'] is defined %}
+            multiple
+          {% endif %}
+           id="awxjobcredentials"
+           name="awxjobcredentials"
+          >
+     {% for subitem in item['options'] %}
+       <option value='{{subitem["value"]}}'>{{subitem["title"]|default(subitem["value"])}}</option>
+     {% endfor %}
+   </select></div></div>
+
+     {% endif%}
+
+     {% if item['type']=='awx-job-tags' %}
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+         {{ item['friendly-name'] }}
+       </div>
+       <div class="likeatableright">
+         <input type="text" id="awxjobtags"
+        {% if item['required'] is defined %}
+          required="{{item['required']}}" }}"
+        {% endif %}
+           name="awxjobtags">
+       </div>
+     </div>
+     {% endif%}
+     {% if item['type']=='awx-job-skip-tags' %}
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+         {{ item['friendly-name'] }}
+       </div>
+       <div class="likeatableright">
+         <input type="text" id="awxjobskiptags" 
+        {% if item['required'] is defined %}
+          required="{{item['required']}}" }}"
+        {% endif %}
+        name="awxjobskiptags">
+       </div>
+     </div>
+     {% endif%}
+     {% if item['type']=='select' %}
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+         {{ item['friendly-name'] }}
+       </div>
+       <div class="likeatableright">
+         <select style="{{ item['style'] }}" 
+          {% if item['placeholder'] is defined %}
+            placeholder="{{ item['placeholder'] }}"
+          {% endif %}
+          {% if item['onchange'] is defined %}
+             onchange="{{ item['onchange'] }}" 
+          {% endif %}
+          {% if item['title'] is defined %}
+            placeholder="{{ item['title'] }}"
+          {% endif %}
+           id="extravar{{ item['var-name'] }}" 
+           name="extravar{{ item['var-name'] }}" 
+          >
+     {% for subitem in item['options'] %}
+       <option value='{{subitem["value"]}}'>{{subitem["title"]|default(subitem["value"])}}</option>
+     {% endfor %}
+   </select></div></div>
+
+     {% endif %}
+     {% if item['type']=='snowapp' %}
+     <script type="text/javascript" src="{{URLPREFACE or ""}}{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+     <script src="{{URLPREFACE or ""}}/static/js/snowappsearch.js"></script>
+     <div class="likeatablerow">
+       <div class="likeatableleft">
+       {% if item['required'] is defined and item['required']%}
+       <b class='required'>(required)</b>
+       {% endif %}
+         {{ item['friendly-name'] }}
+       </div>
+       <div class="likeatableright">
+  <div class='autocomplete'>
+
+    <div>
+        <input type="text" id="txt_search" name="extravar{{ item['var-name'] }}" autocomplete="off"
+      {% if item['required'] is defined %}
+        required="{{item['required']}}"
+      {% endif %}
+
+         >
+    </div>
+    <ul id="searchResult"></ul>
+
+    <div class="clear"></div>
+   </div>
+   </div></div>
+
+     {% endif %}
+
+   {% endfor %}
+  <br>
+  </div>
+  <input type="submit" value="Submit">
+  <br>
+  <br>
+  <br>
+  </center>
+  </div>
+      {% if jobdata['javascript-files-tail'] is defined and jobdata['javascript-files-tail']|length > 0 %}
+        {% for item in jobdata['javascript-files-tail'] %}
+          <script src="{{URLPREFACE or ""}}/static/js/{{item}}"></script>
+        {% endfor %}
+      {% endif %}
+  </body>
+</html>

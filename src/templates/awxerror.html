@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br><br>
+<div class="mainbody">
+<br><br>
+<center>
+  <h1><b>Error</b> {{ errorcode }}</h1>
+    {{ errordata|safe }}
+  {% if '_tr1' not in errordata and 'not in a group' in errordata %}
+    <div>You may be able to gain access by logging in with a different credential, such as your tier 1 ID.</div>
+  {% endif %}
+  <br>
+  </center>
+  </div>
+  </body>
+</html>

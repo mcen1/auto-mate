@@ -1,0 +1,96 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-mate
+  namespace: auto-mate
+  labels:
+    app: auto-mate 
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: auto-mate
+  template:
+    metadata:
+      labels:
+        app: auto-mate
+    spec:
+      containers:
+      - image: ghcr.io/company/auto-mate:1.0.21
+        name: auto-mate
+        imagePullPolicy: IfNotPresent
+        readinessProbe:
+           exec:
+              command:
+              - /bin/sh
+              - /usr/portal/healthcheck.sh
+           initialDelaySeconds: 45
+           periodSeconds: 30
+           failureThreshold: 2
+        livenessProbe:
+           exec:
+              command:
+              - /bin/sh
+              - /usr/portal/healthcheck.sh
+           initialDelaySeconds: 120
+           periodSeconds: 15
+           failureThreshold: 2
+
+#        command: ['gunicorn']
+#        args: [ "-w", "4", "--env", "SCRIPT_NAME=/portal/", "-b", "0.0.0.0:8000", "wsgi:app"] 
+        env:
+          - name: K8S_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+            # change per env
+          - name: PYTHONUNBUFFERED
+            value: '1'
+          - name: ITOAPI_URL
+            value: 'autogate.company.com'
+          - name: LDAP_HOST
+            value: 'abcldap.company.com'
+          - name: SNOW_HOST
+            value: 'https://company.service-now.com/'
+          - name: WEBSITE_URL
+            value: 'https://auto-mate.company.com'
+          - name: SNOW_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: auto-mate-secrets
+                key: snow_username
+          - name: SNOW_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: auto-mate-secrets
+                key: snow_password
+#          - name: FROMABENV_ITOAAUTH_API_KEY
+#            valueFrom:
+#              secretKeyRef:
+#                name: kongapigatewaysecrets
+#                key: fromabenv_itoaauth_api_key
+          - name: ITOAPI_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: auto-mate-secrets
+                key: itoapi_token
+          - name: CERT_VERIFY
+            value: '/etc/ssl/certs/ca-certificates.crt'
+          - name: LDAP_BASEDN
+            value: 'OU=users,DC=company,DC=com'
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      restartPolicy: Always
+
+ 

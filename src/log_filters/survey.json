@@ -1,0 +1,5 @@
+{
+  "awx-job-name": "automation-awx-itoa_survey-job",
+  "replacements": [{"to_replace": "*","replacement": ":) "}],
+  "regex_replacements": [{"to_replace": "[Ee][Mm][Aa][Ii][Ll]","replacement": "electronic mail"}]
+}

@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Auto-mate</title>
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br><br>
+<div class="mainbody">
+<center>
+  <h1><b>Error</b> {{ errorcode }}</h1>
+  <div>{{ data }}</div>
+{% if errorcode == 403 %}
+  {% if '_tr1' not in data %}
+    <div>You may be able to gain access by logging in with a different credential, such as your tier 1 ID.</div>
+  {% endif %}
+{% endif %}
+  <br>
+  </center>
+  </div>
+  </body>
+</html>

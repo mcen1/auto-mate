@@ -1,0 +1,17 @@
+{
+  "awx-job-name": "automation-awx-awx_update-job",
+  "portal-endpoint": "automation_awx_update_vmsnap",
+  "short-description": "Create AWX VMware snapshot.",
+  "valid-ad-groups": ["CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "run-via": ["form"],
+  "category": "AWX",
+  "friendly-name": "AWX VM Snapshot",
+  "icon": "snapshot.png",
+  "form-elements":[
+    {"friendly-name":"Snapshot mode:","type":"select","options": [{"title":"List","value":"list_snapshot"},{"title":"Create","value":"create_snapshot"},{"title":"Delete","value":"delete_snapshot"},{"title":"Restore","value":"restore_snapshot"}], "var-name": "mode", "required": true},
+    {"friendly-name":"AWX host:","type":"select","options": [{"title":"server4d001","value":"server4d001"},{"title":"server1s001","value":"server1s001"},{"title":"server1s002","value":"server1s002"},{"title":"server1s003","value":"server1s003"},{"title":"server1p001","value":"server1p001"},{"title":"server1p002","value":"server1p002"}], "var-name": "awx_host_to_update", "required": true},
+    {"friendly-name":"Snapshot name:","type":"text","max-length":32, "var-name":"snapshot_name", "required": true }
+  ],
+  "description": "For use internally."
+}

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Auto-mate</title>
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br><br>
+<div class="mainbody">
+<center>
+  <div>Attempting to cancel job... <br>
+     {% if 'status_code' in jobdata['results'] and jobdata['results']['status_code']==202 %}
+       Job cancelled successfully.
+     {% else %}
+       {{jobdata}}
+     {% endif %}
+     <br><a href="/">Return home</a>
+  </div>
+  <br>
+  </center>
+  </div>
+  </body>
+</html>

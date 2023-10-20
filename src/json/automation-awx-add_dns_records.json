@@ -1,0 +1,26 @@
+{
+  "awx-job-name": "automation-awx-infoblox_dns-job",
+  "portal-endpoint": "infoblox_add_dns",
+  "icon": "dns.png",
+  "short-description": "Add DNS records in Infoblox.",
+  "valid-ad-groups": ["CN=prd_app_tr1_access_ansible_itccaa,DC=company,DC=com","CN=Automation_Team,OU=Roles,DC=company,DC=com"],
+  "job-type": "awx",
+  "run-via": ["form"],
+  "category": "ITOA",
+  "friendly-name": "Add Infoblox DNS records",
+  "form-elements":[
+    {"friendly-name":"DNS record type:","type":"select","options": [{"title":"A","value":"A"},{"title":"CNAME","value":"CNAME"},{"title":"PTR","value":"PTR"},{"title":"TXT","value":"TXT"}], "var-name": "dnsRecordType", "onchange": "ptrShower()"},
+    {"friendly-name":"DNS record's fully-qualified domain name:","type":"text","max-length":64, "var-name":"dnsRecordFQDN", "required": true },
+    {"friendly-name":"DNS record's value:","type":"text","max-length":256, "var-name":"dnsRecordValue", "required": true },
+    {"type":"inline-html","content":"<div class='likeatableleft'></div><div class='likeatableright'><div class='helperdiv'>Record value examples: <br>- the IP address for an A and PTR record <br>- the true name behind a CNAME <br>- the text inside a TXT record.</div></div>"},
+    {"friendly-name":"","type":"div-begin", "var-name":"dnsCreatePTRdiv", "style": "display:block"},
+    {"friendly-name":"Create PTR record for A record?","type":"select","options": [{"title":"yes","value":"yes"},{"title":"no","value":"no"}], "var-name": "dnsCreatePTR"},
+    {"friendly-name":"","type":"div-end"},
+    {"friendly-name":"DNS record's associated ServiceNow application:","type":"snowapp", "var-name":"dnsRecordApplication"  },
+    {"friendly-name":"SCTSK associated with this DNS request:","type":"text","max-length":12, "var-name":"dnsRecordSCTASK", "placeholder": "SCTSK#######", "pattern":"[Ss][Cc][Tt][Ss][Kk][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" },
+    {"friendly-name":"DNS view:","type":"select","options": [{"title":"Internal","value":"Internal"},{"title":"External","value":"External"},{"title":"Both","value":"Both"}], "var-name": "dnsRecordView"}
+  ],
+  "javascript-files-head": ["infobloxvalidation.js"],
+  "validate-form-function": "validateForm()",
+  "description": "This job will add records to Infoblox DNS and also creates a pre-approved change before doing so." 
+}
