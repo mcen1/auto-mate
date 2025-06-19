@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jobconfirmmessagesfilemap
+  namespace: CHANGEME
+data:
+  jobconfirmmessages.json: |
+    {
+      "CHANGEME": "WARNING: DTC entries will be deleted when this job is ran."
+    }
