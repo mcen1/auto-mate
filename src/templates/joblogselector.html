@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CHANGEME</title>
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/newui.css') }}">
+    </head>
+    <body>
+{% include "header.html" %}
+      <div class='normalone'>
+      <form>
+      <input type="text" id="templatename" name="templatename">
+      <input type="submit" value="Submit">
+      </form>
+      </div>
+    </body>
+</html>

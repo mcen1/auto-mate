@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CHANGEME</title>
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/newui.css') }}">
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/joblist.css') }}">
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br>
+      <div class='normalone'>
+       <center>
+{% for result in jobrunstats %}
+<div class="jobrundiv">
+<strong>{{result}}</strong><br>
+{% for row in jobrunstats[result] %}
+{{ row }}<br>
+{% endfor %}
+</div>
+{% endfor %}
+<br><br>
+<a href='/jobrunstats.csv' style='margin-left: auto; margin-right: auto;'>Download CSV</a>
+      </div>
+</center>
+    </body>
+</html>

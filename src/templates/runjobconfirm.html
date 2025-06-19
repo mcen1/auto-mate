@@ -1,29 +1,57 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>{{ title }}</title>
+        {% if jobmetadata['jobrunconf-javascript-files-head'] is defined and jobmetadata['jobrunconf-javascript-files-head']|length > 0 %}
+          {% for item in jobmetadata['jobrunconf-javascript-files-head'] %}
+            <script src="{{URLPREFACE or ""}}/static/js/{{item}}"></script>
+          {% endfor %}
+        {% endif %}
     </head>
     <body>
-{% include "header.html" %}
-<br><br><br>
+{% if 'disallow-logs' not in jobmetadata or not jobmetadata['disallow-logs'] %}
+{% with jobname=jobmetadata['awx-job-name'] %}
+  {% include "header.html" %}
+{% endwith %}
+{% else %}
+  {% include "header.html" %}
+{% endif %}
+<br>
 <div class="mainbody">
-<br><br>
+<br>
 <center>
   <div class="awxrunreq">
 <form id="userform" action="{{URLPREFACE or ""}}/runjobawx" method="post" >
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() if csrf_token else '' }}"/>
+  <strong style='font-size:1.5em'><div class="icon"><img style="max-height:48px;" class='jobicon' src='{{URLPREFACE or ""}}{{ url_for('static', filename='images/icons/') }}{{jobmetadata['icon']|default('generic.png')}}'></div>{{jobmetadata['friendly-name']|default(jobmetadata['portal-endpoint'])}}</strong><br>
+  <br>
+  <div class="explanation">{{ jobmetadata['description']|default('')|safe }}</div>
+  <br>
    {% for item in reqargs %}
    <div class="likeatablerow">
+     {% if item.startswith('extravar') or item=="awx-job-name" %}
      <div class="likeatableleft">
-
      {{item|replace("extravar","")}}:</div><div class="likeatableright"><input type="text"  id="country" name="{{item}}" value="{{reqargs[item]}}" readonly style="background: #E0E0E0"></div>
+     {% elif item.startswith('helperdiv') %}
+     <div class="helperdiv">{{reqargs[item]}}</div>
+     {% endif %}
    {% endfor %}
 </div>
 <br>
-Are you sure you want to submit this information?<br>
-<input type="submit" value="Yes, submit this form!"></form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='{{URLPREFACE or ""}}/'>No, get me out of here.</a>
+Are you sure you want to run <strong>"{{jobmetadata['friendly-name']|default(jobmetadata['portal-endpoint'])}}"</strong> with these values?<br>
+<input id="submit-button" type="submit" value="Yes, submit this form!"></form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='{{URLPREFACE or ""}}/'>No, get me out of here.</a>
 
   </div>
   <br>
   </center>
   </div>
+
+  <script src="{{URLPREFACE or ""}}/static/js/form_submit_events.js"></script>
+  {% include "jobfooter.html" %}
+        {% if jobmetadata['jobrunconf-javascript-files-tail'] is defined and jobmetadata['jobrunconf-javascript-files-tail']|length > 0 %}
+          {% for item in jobmetadata['jobrunconf-javascript-files-tail'] %}
+            <script src="{{URLPREFACE or ""}}/static/js/{{item}}"></script>
+          {% endfor %}
+        {% endif %}
   </body>
 </html>

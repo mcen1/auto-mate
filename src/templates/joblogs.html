@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CHANGEME</title>
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/newui.css') }}">
+<link rel="stylesheet" href="{{URLPREFACE or ""}}{{ url_for('static', filename='css/joblist.css') }}">
+    </head>
+    <body>
+{% include "header.html" %}
+<br><br>
+      <div class='normalone'>
+       <center>
+       <table id="resultsTable">
+       <thead>
+       <tr>
+        <th data-column="status">Status</th>
+        <th data-column="jobRun">Job run</th>
+        <th data-column="started">Started</th>
+        <th data-colun="finished">Finished</th>
+       </tr>
+       </thead>
+       <tbody>
+{% for result in job_data['results'] %}
+    <tr>
+        <td><p class="nopbreak awxstatus{{ result['status'] }}">{{ result['status'] }}</p></td>
+        <td><a href='/awxviewjob?jobid={{ result['id'] }}' target='_blank'>{{ job_name }} {{ result['id'] }}</a></td>
+        <td>{{ result['started'] }}</td>
+        <td>{{ result['finished'] }}</td>
+    </tr>
+{% endfor %}
+       <tbody>
+</table>
+<br><br>
+      </div>
+</center>
+    </body>
+      <script src="{{URLPREFACE or ""}}/static/js/joblist.js"></script>
+</html>
