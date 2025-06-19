@@ -1,0 +1,252 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+.nodecoration {
+text-decoration: none;
+color: #000;
+}
+
+.nodecoration:hover {
+text-decoration: none !important;
+color: #00a8ff !important;
+}
+
+.toolbar input[type="text"],
+.toolbar select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.jobicon {
+height:32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  font-family: Arial, sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+.card-content {
+gap: 0.3rem;
+}
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: auto;
+}
+
+.tag {
+  background-color: #e0e7ff;
+  color: #333;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.tag:hover {
+  cursor: -webkit-grab; cursor: grab;
+}
+
+.tag.prod {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.tag.demo {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.tag.decommission {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+}
+
+.tag.dns {
+  background-color: #e1b12c;
+  color: #000;
+}
+
+.tag.netscaler {
+  background-color: #0984e3;
+  color: #fff;
+}
+
+.tag.MSAD {
+  background-color: #74b9ff;
+  color: #fff;
+}
+
+.tag.decommission {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.tag.xmatters {
+  background-color: #2ECC71;
+  color: #fff;
+}
+
+.tag.vault {
+  background-color: #718093;
+  color: #fff;
+}
+
+.tag.zerto {
+  background-color: #c23616;
+  color: #fff;
+}
+
+.tag.cohesity {
+  background-color: #95c83c;
+  color: #fff;
+}
+
+.tag.newrelic {
+  background-color: #2f3640;
+  color: #44bd32;
+}
+
+.tag.aruba {
+  background-color: #f0932b;
+  color: #f5f6fa;
+}
+
+.tag.AWX {
+  background-color: #192a56;
+  color: #f5f6fa;
+}
+
+.tag.vmware {
+  background-color: #e84118;
+  color: #dcdde1;
+}
+
+.tag.qualys {
+  background-color: #d6340c;
+  color: #eaeaec;
+}
+
+.tag.servicenow {
+  background-color: #f5f6fa;
+  color: #25CCF7;
+}
+
+.tag.infoblox {
+  background-color: #000;
+  color: #00a8ff;
+}
+
+.tag.SMTP {
+  background-color: #718093;
+  color: #fff;
+}
+
+.tag.palo {
+  background-color: #4cd137;
+  color: #273c75;
+}
+
+.tag.groups {
+  background-color: #6c5ce7;
+  color: #fff;
+}
+
+
+.cardheader {
+  clear: both;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-left: .25rem;
+  padding-left: .25rem;
+  border-left: 4px solid #1CHANGEME9c;
+  height:1.5rem;
+  font-family: Arial, sans-serif;
+  background-color: #f7f9fc;
+  background: #f7f9fc;
+}
+.category_itcc_-_decommissioning {
+  border-left: 4px solid #e74c3c;
+}
+.category_CHANGEME {
+  border-left: 4px solid #3b82f6;
+}
+.category_awx {
+  border-left: 4px solid rgb(25, 42, 86);
+}
+.category_sos {
+  border-left: 4px solid #f1c40f;
+}
+.category_CHANGEME_team {
+  border-left: 4px solid #000;
+}
+.normalone {
+background: #f7f9fc;
+}
+.hiddenjobtile {
+  display: none !important;
+}
+body {
+  background: #f7f9fc;
+}
+
+.cardlink {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    width: 100%;
+    height: 100%;
+}
+.tag.active {
+}
+
+.card.hidden {
+  display: none;
+}
+
+.redwarning {
+  color: #e74c3c !important;
+}
